@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if category_posts %}
+
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+    <h1>{{ cats }}</h1>
+
+    <ul></ul>
+    {% for post in category_posts %}
+        <li><a href="{% url 'article-detail' post.pk %}">
+            {{ post.title }} </a> -
+            {{ post.author.first_name }} {{ post.author.last_name }}
+            - {{ post.post_date }} {{ post.post_time }}
+            {% if user.is_authenticated %}
+                <small><a href="{% url 'update-post' post.pk %}">Edit post<a/>
+                  <a href="{% url 'delete-post' post.pk %}">Delete post<a/>
+                </small><br>
+            {% endif %}
+            {{ post.body|slice:"200" }}</li>
+    {% endfor %}
+
+    {{ cats }}
+    <ul/>
+    </body>
+    </html>
+
+{% endif %}
+
+{% endblock content %}
